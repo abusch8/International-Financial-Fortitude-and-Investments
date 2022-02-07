@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<assets>
+  <property>
+    <code>PA001</code>
+    <label>Boardwalk</label>
+    <appraisedValue>400000.0</appraisedValue>
+  </property>
+  <property>
+    <code>PA002</code>
+    <label>57 Chevy</label>
+    <appraisedValue>47000.0</appraisedValue>
+  </property>
+  <property>
+    <code>PA003</code>
+    <label>Honus Wagner Card</label>
+    <appraisedValue>1200000.0</appraisedValue>
+  </property>
+  <property>
+    <code>PA004</code>
+    <label>1993 Ford Festiva</label>
+    <appraisedValue>3.5</appraisedValue>
+  </property>
+  <property>
+    <code>PA005</code>
+    <label>2020 Honda Fit</label>
+    <appraisedValue>14500.0</appraisedValue>
+  </property>
+  <stock>
+    <code>GOOG001</code>
+    <label>Google Inc.</label>
+    <symbol>GOOG</symbol>
+    <sharePrice>3000.0</sharePrice>
+  </stock>
+  <stock>
+    <code>123APP</code>
+    <label>Apple</label>
+    <symbol>AAPL</symbol>
+    <sharePrice>429.8</sharePrice>
+  </stock>
+  <stock>
+    <code>No1BURR</code>
+    <label>Chipotle Mexican Grill</label>
+    <symbol>CMG</symbol>
+    <sharePrice>341.91</sharePrice>
+  </stock>
+  <stock>
+    <code>B0oWM</code>
+    <label>Costco</label>
+    <symbol>COST</symbol>
+    <sharePrice>106.13</sharePrice>
+  </stock>
+  <stock>
+    <code>N0TPIX</code>
+    <label>3D Systems</label>
+    <symbol>DDD</symbol>
+    <sharePrice>35.4</sharePrice>
+  </stock>
+  <crypto>
+    <code>BTC001</code>
+    <label>Bitcoin</label>
+    <exchangeRate>65694.5</exchangeRate>
+    <exchangeFeeRate>1.25</exchangeFeeRate>
+  </crypto>
+  <crypto>
+    <code>BARK</code>
+    <label>Dogecoin</label>
+    <exchangeRate>0.2788</exchangeRate>
+    <exchangeFeeRate>2.75</exchangeFeeRate>
+  </crypto>
+  <crypto>
+    <code>EIF101</code>
+    <label>Ethereum</label>
+    <exchangeRate>4745.83</exchangeRate>
+    <exchangeFeeRate>1.75</exchangeFeeRate>
+  </crypto>
+  <crypto>
+    <code>SC1000</code>
+    <label>StupidCoin 1k</label>
+    <exchangeRate>1.01</exchangeRate>
+    <exchangeFeeRate>8.5</exchangeFeeRate>
+  </crypto>
+  <crypto>
+    <code>SPICY</code>
+    <label>Flow</label>
+    <exchangeRate>13.85</exchangeRate>
+    <exchangeFeeRate>5.5</exchangeFeeRate>
+  </crypto>
+</assets>
