@@ -10,13 +10,13 @@ import java.util.List;
 public class DataConverter {
 
     public static void main(String[] args) {
-        List<Person> personList = ReadFile.readPersonsCSV();
-        List<Asset> assetList = ReadFile.readAssetsCSV();
+        List<Person> persons = ReadFile.readPersonsCSV();
+        List<Asset> assets = ReadFile.readAssetsCSV();
 
-        WriteFile.convertPersonsToXML(personList);
-        WriteFile.convertAssetsToXML(assetList);
+        WriteFile.convertPersonsToXML(persons);
+        WriteFile.convertAssetsToXML(assets);
 
-        WriteFile.convertPersonsToJSON(personList);
-        WriteFile.convertAssetsToJSON(assetList);
+        WriteFile.convertPersonsToJSON(persons);
+        WriteFile.convertAssetsToJSON(assets);
     }
 }

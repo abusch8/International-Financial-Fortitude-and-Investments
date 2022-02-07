@@ -2,8 +2,8 @@ package com.iffi.entity;
 
 public class Stock extends Asset {
 
-    final private String symbol;
-    final private double sharePrice;
+    private final String symbol;
+    private final double sharePrice;
 
     public Stock(String code, String label, String symbol, double sharePrice) {
         super(code, label);

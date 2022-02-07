@@ -13,7 +13,7 @@ import java.util.List;
 
 public class WriteFile {
 
-    public static void convertPersonsToXML(List<Person> personList) {
+    public static void convertPersonsToXML(List<Person> persons) {
         XStream xstream = new XStream(new DomDriver());
         xstream.alias("persons", List.class);
         xstream.alias("person", Person.class);
@@ -25,14 +25,14 @@ public class WriteFile {
         try {
             BufferedWriter xml = new BufferedWriter(new FileWriter("data/Persons.xml"));
             xml.write("<?xml version=\"1.0\"?>\n");
-            xml.write(xstream.toXML(personList));
+            xml.write(xstream.toXML(persons));
             xml.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void convertAssetsToXML(List<Asset> assetList) {
+    public static void convertAssetsToXML(List<Asset> assets) {
         XStream xstream = new XStream(new DomDriver());
         xstream.alias("assets", List.class);
         xstream.alias("property", Property.class);
@@ -42,27 +42,27 @@ public class WriteFile {
         try {
             BufferedWriter xml = new BufferedWriter(new FileWriter("data/Asset.xml"));
             xml.write("<?xml version=\"1.0\"?>\n");
-            xml.write(xstream.toXML(assetList));
+            xml.write(xstream.toXML(assets));
             xml.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void convertPersonsToJSON(List<Person> personList) {
+    public static void convertPersonsToJSON(List<Person> persons) {
         try {
             BufferedWriter json = new BufferedWriter(new FileWriter("data/Persons.json"));
-            json.write(new GsonBuilder().setPrettyPrinting().create().toJson(personList));
+            json.write(new GsonBuilder().setPrettyPrinting().create().toJson(persons));
             json.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void convertAssetsToJSON(List<Asset> assetList) {
+    public static void convertAssetsToJSON(List<Asset> assets) {
         try {
             BufferedWriter json = new BufferedWriter(new FileWriter("data/Assets.json"));
-            json.write(new GsonBuilder().setPrettyPrinting().create().toJson(assetList));
+            json.write(new GsonBuilder().setPrettyPrinting().create().toJson(assets));
             json.close();
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -2,8 +2,8 @@ package com.iffi.entity;
 
 public class Cryptocurrencies extends Asset {
 
-    final private double exchangeRate;
-    final private double exchangeFeeRate;
+    private final double exchangeRate;
+    private final double exchangeFeeRate;
 
     public Cryptocurrencies(String code, String label, double exchangeRate, double exchangeFeeRate) {
         super(code, label);

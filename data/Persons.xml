@@ -12,6 +12,7 @@
       <country>USA</country>
     </address>
     <emails>
+      <email>scastro@cubs.com</email>
       <email>starlin_castro13@gmail.com</email>
     </emails>
   </person>
@@ -27,6 +28,7 @@
       <country>USA</country>
     </address>
     <emails>
+      <email>brock_f_sampson@gmail.com</email>
       <email>bsampson@venture.com</email>
     </emails>
   </person>
@@ -54,7 +56,9 @@
       <zip>68116</zip>
       <country>USA</country>
     </address>
-    <emails/>
+    <emails>
+      <email>finn@atime.com</email>
+    </emails>
   </person>
   <person>
     <personCode>ma12</personCode>
@@ -67,7 +71,9 @@
       <zip>60613</zip>
       <country>USA</country>
     </address>
-    <emails/>
+    <emails>
+      <email>sveum@cubs.com</email>
+    </emails>
   </person>
   <person>
     <personCode>321nd</personCode>
@@ -81,6 +87,7 @@
       <country>USA</country>
     </address>
     <emails>
+      <email>whartnell@doctors.com</email>
       <email>dr@who.com</email>
     </emails>
   </person>
@@ -96,6 +103,7 @@
       <country>USA</country>
     </address>
     <emails>
+      <email>ptroug@cse.unl.edu</email>
       <email>ptrou32@unl.edu</email>
     </emails>
   </person>
@@ -110,7 +118,9 @@
       <zip>M5V 2T6</zip>
       <country>Canada</country>
     </address>
-    <emails/>
+    <emails>
+      <email>jpet@whofan.com</email>
+    </emails>
   </person>
   <person>
     <personCode>aef1b</personCode>
@@ -137,6 +147,7 @@
       <country>USA</country>
     </address>
     <emails>
+      <email>bfox@gmail.com</email>
       <email>csheen@crazy.net</email>
     </emails>
   </person>

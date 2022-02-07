@@ -2,8 +2,8 @@ package com.iffi.entity;
 
 public abstract class Asset {
 
-    final private String code;
-    final private String label;
+    private final String code;
+    private final String label;
 
     protected Asset(String code, String label) {
         this.code = code;
