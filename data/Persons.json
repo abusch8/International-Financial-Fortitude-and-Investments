@@ -1,4 +1,5 @@
-[
+{
+"persons": [
   {
     "personCode": "944c",
     "lastName": "Castro",
@@ -150,4 +151,4 @@
       "csheen@crazy.net"
     ]
   }
-]
+]}
