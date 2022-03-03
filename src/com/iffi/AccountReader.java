@@ -14,7 +14,12 @@ public class AccountReader {
         List<Asset> assets = ReadFile.readAssetsCSV();
         List<Account> accounts = ReadFile.readAccountCSV(persons, assets);
         for (Account account : accounts) {
-            System.out.println(account.toString());
+//            System.out.println(account.toString());
+            for (Asset asset : account.getAssets()) {
+                System.out.println(asset.toString());
+            }
         }
+
+
     }
 }

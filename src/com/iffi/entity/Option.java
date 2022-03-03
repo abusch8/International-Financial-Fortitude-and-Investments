@@ -18,4 +18,48 @@ public abstract class Option extends Stock {
         this.premiumPerShare = premiumPerShare;
         this.strikeDate = strikeDate;
     }
+
+    public void setPurchaseDate(LocalDate purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    public void setStrikePricePerShare(double strikePricePerShare) {
+        this.strikePricePerShare = strikePricePerShare;
+    }
+
+    public void setShareLimit(double shareLimit) {
+        this.shareLimit = shareLimit;
+    }
+
+    public void setPremiumPerShare(double premiumPerShare) {
+        this.premiumPerShare = premiumPerShare;
+    }
+
+    public void setStrikeDate(LocalDate strikeDate) {
+        this.strikeDate = strikeDate;
+    }
+
+    public LocalDate getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public double getStrikePricePerShare() {
+        return strikePricePerShare;
+    }
+
+    public double getShareLimit() {
+        return shareLimit;
+    }
+
+    public double getPremiumPerShare() {
+        return premiumPerShare;
+    }
+
+    public LocalDate getStrikeDate() {
+        return strikeDate;
+    }
+
+    public String toString() {
+        return "";
+    }
 }

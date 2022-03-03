@@ -39,12 +39,11 @@ public abstract class Account {
     }
 
     public String toString() {
-        return "Account{" +
-                "number='" + number + '\'' +
-                ", owner=" + owner +
-                ", manager=" + manager +
-                ", beneficiary=" + beneficiary +
-                ", assets=" + assets +
-                '}';
+        return String.format("=======================================\n||%6s Account %-20s||\n=======================================\n", this.getClass().getSimpleName(), number) +
+                String.format("+---------+\n|  Owner  |\n+---------+\n%s\n", owner.toString()) +
+                String.format("+-----------+\n|  Manager  |\n+-----------+\n%s\n", manager.toString()) +
+                String.format("+---------------+\n|  Beneficiary  |\n+---------------+\n%s\n", beneficiary.toString());
+
+//                assets.forEach(asset -> toString());
     }
 }

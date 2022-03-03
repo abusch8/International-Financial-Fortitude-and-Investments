@@ -25,6 +25,22 @@ public class Stock extends Asset {
         this.dividendTotal = dividendTotal;
     }
 
+    public void setPurchaseDate(LocalDate purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    public void setPurchaseSharePrice(Double purchaseSharePrice) {
+        this.purchaseSharePrice = purchaseSharePrice;
+    }
+
+    public void setNumberOfShares(Double numberOfShares) {
+        this.numberOfShares = numberOfShares;
+    }
+
+    public void setDividendTotal(Double dividendTotal) {
+        this.dividendTotal = dividendTotal;
+    }
+
     public String getSymbol() {
         return symbol;
     }
@@ -47,5 +63,35 @@ public class Stock extends Asset {
 
     public Double getDividendTotal() {
         return dividendTotal;
+    }
+
+    public double getValue() {
+        return sharePrice * numberOfShares + dividendTotal;
+    }
+
+    public double getFee() {
+        return 0;
+    }
+
+    public double getPurchaseValue() {
+        return purchaseSharePrice * numberOfShares;
+    }
+
+    public double getGain() {
+        return this.getValue() - this.getPurchaseValue();
+    }
+
+    public double getGainPercentage() {
+        return (double) Math.round((this.getGain() / this.getPurchaseValue() * 100) * 1000) / 1000;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("%-10s %-15s %s (Stock)\n", code, label, symbol));
+        sb.append(String.format("  Cost Basis:  %.3f shares @ $%.2f on %s\n", numberOfShares, purchaseSharePrice, purchaseDate));
+        String line = String.format("  Value Basis: %.3f shares @ $%.2f", numberOfShares, sharePrice);
+        sb.append(line).append(" ".repeat(59 - line.length()));
+        sb.append(String.format("%10.3f%%    $%15.2f\n", this.getGainPercentage(), this.getValue()));
+        return sb.toString();
     }
 }

@@ -37,4 +37,12 @@ public class Person {
     public List<String> getEmails() {
         return emails;
     }
+
+    public String getName() {
+        return lastName + ", " + firstName;
+    }
+
+    public String toString() {
+        return String.format("%s\n%s\n%s", this.getName(), emails.toString(), address.toString());
+    }
 }
