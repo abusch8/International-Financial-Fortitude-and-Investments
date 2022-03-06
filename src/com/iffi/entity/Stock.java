@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public class Stock extends Asset {
 
-    private final String symbol;
-    private final double sharePrice;
+    protected final String symbol;
+    protected final double sharePrice;
     private LocalDate purchaseDate;
     private Double purchaseSharePrice;
     private Double numberOfShares;
@@ -82,7 +82,7 @@ public class Stock extends Asset {
     }
 
     public double getGainPercentage() {
-        return (double) Math.round((this.getGain() / this.getPurchaseValue() * 100) * 1000) / 1000;
+        return (double) Math.round(((this.getGain() / this.getPurchaseValue() * 100)) * 1000) / 1000;
     }
 
     public String toString() {

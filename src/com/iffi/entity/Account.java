@@ -38,6 +38,46 @@ public abstract class Account {
         return assets;
     }
 
+    public double getTotalValue() {
+        double total = 0;
+        for (Asset asset : assets) {
+            total += asset.getValue();
+        }
+        return total;
+    }
+
+    public double getCostBasis() {
+        double total = 0;
+        for (Asset asset : assets) {
+            total += asset.getPurchaseValue();
+        }
+        return total;
+    }
+
+    public double getTotalFees() {
+        double total = 0;
+        for (Asset asset : assets) {
+            total += asset.getFee();
+        }
+        return total;
+    }
+
+    public double getTotalGain() {
+        double total = 0;
+        for (Asset asset : assets) {
+            total += asset.getGain();
+        }
+        return total;
+    }
+
+    public double getTotalGainPercentage() {
+        double total = 0;
+        for (Asset asset : assets) {
+            total += asset.getGain();
+        }
+        return total;
+    }
+
     public String toString() {
         return String.format("=======================================\n||%6s Account %-20s||\n=======================================\n", this.getClass().getSimpleName(), number) +
                 String.format("+---------+\n|  Owner  |\n+---------+\n%s\n", owner.toString()) +

@@ -72,7 +72,7 @@ public class Cryptocurrency extends Asset {
     }
 
     public double getGainPercentage() {
-        return (double) Math.round((this.getGain() / this.getPurchaseValue() * 100) * 1000) / 1000;
+        return (double) Math.round(((this.getGain() / this.getPurchaseValue()) * 100) * 1000) / 1000;
     }
 
     public String toString() {

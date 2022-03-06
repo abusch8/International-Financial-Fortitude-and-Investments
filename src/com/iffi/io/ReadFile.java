@@ -77,8 +77,8 @@ public class ReadFile {
                                 case "Stock" -> {
                                     switch (tokens[++j]) {
                                         case "S" -> associatedAssets.add(new Stock((Stock) existingAsset, LocalDate.parse(tokens[++j]), Double.parseDouble(tokens[++j]), Double.parseDouble(tokens[++j]), Double.parseDouble(tokens[++j])));
-                                        case "P" -> associatedAssets.add(new Put((Stock) existingAsset, LocalDate.parse(tokens[++j]), Double.parseDouble(tokens[++j]), Double.parseDouble(tokens[++j]), Double.parseDouble(tokens[++j]),LocalDate.parse(tokens[++j])));
-                                        case "C" -> associatedAssets.add(new Call((Stock) existingAsset, LocalDate.parse(tokens[++j]), Double.parseDouble(tokens[++j]), Double.parseDouble(tokens[++j]), Double.parseDouble(tokens[++j]),LocalDate.parse(tokens[++j])));
+                                        case "P" -> associatedAssets.add(new Put((Stock) existingAsset, LocalDate.parse(tokens[++j]), Double.parseDouble(tokens[++j]), Double.parseDouble(tokens[++j]), Double.parseDouble(tokens[++j]), LocalDate.parse(tokens[++j])));
+                                        case "C" -> associatedAssets.add(new Call((Stock) existingAsset, LocalDate.parse(tokens[++j]), Double.parseDouble(tokens[++j]), Double.parseDouble(tokens[++j]), Double.parseDouble(tokens[++j]), LocalDate.parse(tokens[++j])));
                                     }
                                 }
                             }

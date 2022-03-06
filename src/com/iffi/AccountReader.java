@@ -17,6 +17,7 @@ public class AccountReader {
 //            System.out.println(account.toString());
             for (Asset asset : account.getAssets()) {
                 System.out.println(asset.toString());
+                System.out.println();
             }
         }
 
