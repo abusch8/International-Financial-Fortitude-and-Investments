@@ -56,7 +56,7 @@ public class Property extends Asset {
     }
 
     public double getGainPercentage() {
-        return (double) Math.round(((this.getGain() / this.getPurchaseValue()) * 100) * 1000) / 1000;
+        return Math.round(((this.getGain() / this.getPurchaseValue()) * 100) * 1000.0) / 1000.0;
     }
 
     public String toString() {

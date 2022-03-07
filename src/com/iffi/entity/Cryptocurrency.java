@@ -56,7 +56,7 @@ public class Cryptocurrency extends Asset {
     }
 
     public double getValue() {
-        return (double) Math.round(numberOfCoins * exchangeRate * (1 - exchangeFeeRate / 100) * 100) / 100;
+        return Math.round(numberOfCoins * exchangeRate * (1 - exchangeFeeRate / 100) * 100.0) / 100.0;
     }
 
     public double getFee() {
@@ -64,7 +64,7 @@ public class Cryptocurrency extends Asset {
     }
 
     public double getPurchaseValue() {
-        return (double) Math.round(numberOfCoins * purchaseExchangeRate * (1 - exchangeFeeRate / 100) * 100) / 100;
+        return Math.round(numberOfCoins * purchaseExchangeRate * (1 - exchangeFeeRate / 100) * 100.0) / 100.0;
     }
 
     public double getGain() {
@@ -72,7 +72,7 @@ public class Cryptocurrency extends Asset {
     }
 
     public double getGainPercentage() {
-        return (double) Math.round(((this.getGain() / this.getPurchaseValue()) * 100) * 1000) / 1000;
+        return Math.round(((this.getGain() / this.getPurchaseValue()) * 100) * 1000.0) / 1000.0;
     }
 
     public String toString() {

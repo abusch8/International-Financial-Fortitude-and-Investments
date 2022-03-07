@@ -73,17 +73,21 @@ public abstract class Account {
     public double getTotalGainPercentage() {
         double total = 0;
         for (Asset asset : assets) {
-            total += asset.getGain();
+            total += asset.getGainPercentage();
         }
         return total;
     }
 
     public String toString() {
-        return String.format("=======================================\n||%6s Account %-20s||\n=======================================\n", this.getClass().getSimpleName(), number) +
-                String.format("+---------+\n|  Owner  |\n+---------+\n%s\n", owner.toString()) +
-                String.format("+-----------+\n|  Manager  |\n+-----------+\n%s\n", manager.toString()) +
-                String.format("+---------------+\n|  Beneficiary  |\n+---------------+\n%s\n", beneficiary.toString());
-
-//                assets.forEach(asset -> toString());
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("=======================================\n||%6s Account %-20s||\n=======================================\n", this.getClass().getSimpleName(), number));
+        sb.append(String.format("+---------+\n|  Owner  |\n+---------+\n%s\n", owner.toString()));
+        sb.append(String.format("+-----------+\n|  Manager  |\n+-----------+\n%s\n", manager.toString()));
+        sb.append(String.format("+---------------+\n|  Beneficiary  |\n+---------------+\n%s\n", beneficiary.toString()));
+        sb.append("+----------------+\n|  Assets        |\n+----------------+\n");
+        for (Asset asset : assets) {
+            sb.append(asset.toString());
+        }
+        return sb.toString();
     }
 }
