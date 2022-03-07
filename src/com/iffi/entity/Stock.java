@@ -82,7 +82,7 @@ public class Stock extends Asset {
     }
 
     public double getGainPercentage() {
-        return Math.round(((this.getGain() / this.getPurchaseValue() * 100)) * 1000.0) / 1000.0;
+        return Math.round(((this.getGain() / this.getPurchaseValue()) * 100) * 1000.0) / 1000.0;
     }
 
     public String toString() {

@@ -10,8 +10,6 @@ public abstract class Option extends Stock {
     protected double premiumPerShare = 0.0;
     protected LocalDate strikeDate = null;
 
-    protected boolean isShort = (sharePrice > strikePricePerShare);
-
     protected Option(Stock stock, LocalDate purchaseDate, double strikePricePerShare, double shareLimit, double premiumPerShare, LocalDate strikeDate) {
         super(stock.getCode(), stock.getLabel(), stock.getSymbol(), stock.getSharePrice());
         this.purchaseDate = purchaseDate;
@@ -61,19 +59,27 @@ public abstract class Option extends Stock {
         return strikeDate;
     }
 
+    public boolean isExecutable() {
+        return (sharePrice > strikePricePerShare);
+    }
+
     public double getValue() {
-        return sharePrice * shareLimit;
+        return (this.isExecutable()) ? shareLimit * (sharePrice - strikePricePerShare) : 0.0;
+    }
+
+    public double getPremium() {
+        return premiumPerShare * shareLimit;
     }
 
     public double getPurchaseValue() {
-        return strikePricePerShare * shareLimit;
+        return (this.isExecutable()) ? shareLimit * (sharePrice - strikePricePerShare - premiumPerShare) : this.getPremium();
     }
 
-//    public double getGain() {
-//
-//    }
-//
-//    public double getGainPercentage() {
-//
-//    }
+    public double getGain() {
+        return this.getValue() - this.getPremium();
+    }
+
+    public double getGainPercentage() {
+        return (this.isExecutable()) ? Math.round(((this.getGain() / this.getPremium()) * 100) * 100.0) / 100.0 : -100.0;
+    }
 }
