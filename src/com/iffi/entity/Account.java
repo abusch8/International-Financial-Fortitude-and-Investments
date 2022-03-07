@@ -59,6 +59,9 @@ public abstract class Account {
         for (Asset asset : assets) {
             total += asset.getFee();
         }
+        if (this instanceof Pro) {
+            total *= 0.75;
+        }
         return total;
     }
 
@@ -88,6 +91,12 @@ public abstract class Account {
         for (Asset asset : assets) {
             sb.append(asset.toString());
         }
+        sb.append("+----------------+\n|  Totals        |\n+----------------+\n");
+        sb.append(String.format("Total Value:         $%12.2f\n", this.getTotalValue()));
+        sb.append(String.format("Cost Basis:          $%12.2f\n", this.getCostBasis()));
+        sb.append(String.format("Total Account Fees:  $%12.2f\n", this.getTotalFees()));
+        sb.append(String.format("Total Return:        $%12.2f\n", this.getTotalGain()));
+        sb.append(String.format("Total Return %%:      $%12.2f\n", this.getTotalGainPercentage()));
         return sb.toString();
     }
 }

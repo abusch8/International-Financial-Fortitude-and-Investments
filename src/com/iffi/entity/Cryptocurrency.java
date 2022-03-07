@@ -64,7 +64,7 @@ public class Cryptocurrency extends Asset {
     }
 
     public double getPurchaseValue() {
-        return Math.round(numberOfCoins * purchaseExchangeRate * (1 - exchangeFeeRate / 100) * 100.0) / 100.0;
+        return numberOfCoins * purchaseExchangeRate;
     }
 
     public double getGain() {
