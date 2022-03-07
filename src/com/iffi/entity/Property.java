@@ -5,8 +5,8 @@ import java.time.LocalDate;
 public class Property extends Asset {
 
     private final double appraisedValue;
-    private LocalDate purchaseDate;
-    private Double purchasePrice;
+    private LocalDate purchaseDate = null;
+    private Double purchasePrice = 0.0;
 
     public Property(String code, String label, double appraisedValue) {
         super(code, label);

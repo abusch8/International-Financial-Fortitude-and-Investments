@@ -3,16 +3,16 @@ package com.iffi;
 import com.iffi.entity.Account;
 import com.iffi.entity.Asset;
 import com.iffi.entity.Person;
-import com.iffi.io.ReadFile;
+import com.iffi.io.FileParser;
 
 import java.util.List;
 
 public class AccountReader {
 
     public static void main(String[] args) {
-        List<Person> persons = ReadFile.readPersonsCSV();
-        List<Asset> assets = ReadFile.readAssetsCSV();
-        List<Account> accounts = ReadFile.readAccountCSV(persons, assets);
+        List<Person> persons = FileParser.readPersonsCSV();
+        List<Asset> assets = FileParser.readAssetsCSV();
+        List<Account> accounts = FileParser.readAccountCSV(persons, assets);
 
         double totalFees = 0.0, totalGain = 0.0, totalValue = 0.0;
         System.out.println("Account Summary Report By Owner");

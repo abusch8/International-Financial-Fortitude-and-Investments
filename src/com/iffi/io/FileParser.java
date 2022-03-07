@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ReadFile {
+public class FileParser {
 
     public static List<Person> readPersonsCSV() {
         List<Person> persons = new ArrayList<>();

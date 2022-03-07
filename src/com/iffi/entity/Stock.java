@@ -6,10 +6,10 @@ public class Stock extends Asset {
 
     protected final String symbol;
     protected final double sharePrice;
-    private LocalDate purchaseDate;
-    private Double purchaseSharePrice;
-    private Double numberOfShares;
-    private Double dividendTotal;
+    private LocalDate purchaseDate = null;
+    private Double purchaseSharePrice = 0.0;
+    private Double numberOfShares = 0.0;
+    private Double dividendTotal = 0.0;
 
     public Stock(String code, String label, String symbol, double sharePrice) {
         super(code, label);
