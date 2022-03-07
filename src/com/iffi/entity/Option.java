@@ -4,11 +4,11 @@ import java.time.LocalDate;
 
 public abstract class Option extends Stock {
 
-    protected LocalDate purchaseDate;
-    protected double strikePricePerShare;
-    protected double shareLimit;
-    protected double premiumPerShare;
-    protected LocalDate strikeDate;
+    protected LocalDate purchaseDate = null;
+    protected double strikePricePerShare = 0.0;
+    protected double shareLimit = 0.0;
+    protected double premiumPerShare = 0.0;
+    protected LocalDate strikeDate = null;
 
     protected boolean isShort = (sharePrice > strikePricePerShare);
 

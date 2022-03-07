@@ -6,9 +6,9 @@ public class Cryptocurrency extends Asset {
 
     private final double exchangeRate;
     private final double exchangeFeeRate;
-    private LocalDate purchaseDate;
-    private Double purchaseExchangeRate;
-    private Double numberOfCoins;
+    private LocalDate purchaseDate = null;
+    private Double purchaseExchangeRate = 0.0;
+    private Double numberOfCoins = 0.0;
 
     public Cryptocurrency(String code, String label, double exchangeRate, double exchangeFeeRate) {
         super(code, label);

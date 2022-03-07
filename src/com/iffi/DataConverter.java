@@ -2,21 +2,21 @@ package com.iffi;
 
 import com.iffi.entity.Asset;
 import com.iffi.entity.Person;
-import com.iffi.io.ReadFile;
-import com.iffi.io.WriteFile;
+import com.iffi.io.FileParser;
+import com.iffi.io.FileWriter;
 
 import java.util.List;
 
 public class DataConverter {
 
     public static void main(String[] args) {
-        List<Person> persons = ReadFile.readPersonsCSV();
-        List<Asset> assets = ReadFile.readAssetsCSV();
+        List<Person> persons = FileParser.readPersonsCSV();
+        List<Asset> assets = FileParser.readAssetsCSV();
 
-        WriteFile.convertPersonsToXML(persons);
-        WriteFile.convertAssetsToXML(assets);
+        FileWriter.convertPersonsToXML(persons);
+        FileWriter.convertAssetsToXML(assets);
 
-        WriteFile.convertPersonsToJSON(persons);
-        WriteFile.convertAssetsToJSON(assets);
+        FileWriter.convertPersonsToJSON(persons);
+        FileWriter.convertAssetsToJSON(assets);
     }
 }
