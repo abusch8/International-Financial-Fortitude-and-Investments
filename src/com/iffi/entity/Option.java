@@ -63,23 +63,23 @@ public abstract class Option extends Stock {
         return (sharePrice > strikePricePerShare);
     }
 
-    public double getValue() {
-        return (this.isExecutable()) ? shareLimit * (sharePrice - strikePricePerShare) : 0.0;
-    }
-
     public double getPremium() {
         return premiumPerShare * shareLimit;
     }
 
-    public double getPurchaseValue() {
-        return (this.isExecutable()) ? shareLimit * (sharePrice - strikePricePerShare - premiumPerShare) : this.getPremium();
-    }
-
-    public double getGain() {
-        return this.getValue() - this.getPremium();
-    }
-
-    public double getGainPercentage() {
-        return (this.isExecutable()) ? Math.round(((this.getGain() / this.getPremium()) * 100) * 100.0) / 100.0 : -100.0;
-    }
+//    public double getValue() {
+//        return (this.isExecutable()) ? shareLimit * (sharePrice - strikePricePerShare) : 0.0;
+//    }
+//
+//    public double getPurchaseValue() {
+//        return (this.isExecutable()) ? shareLimit * (sharePrice - strikePricePerShare - premiumPerShare) : this.getPremium();
+//    }
+//
+//    public double getGain() {
+//        return this.getValue() - this.getPurchaseValue();
+//    }
+//
+//    public double getGainPercentage() {
+//        return Math.round(((this.getGain() / this.getPurchaseValue()) * 100) * 1000.0) / 1000.0;
+//    }
 }

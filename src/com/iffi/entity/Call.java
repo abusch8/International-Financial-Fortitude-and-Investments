@@ -8,25 +8,12 @@ public class Call extends Option {
         super(stock, purchaseDate, strikePricePerShare, shareLimit, premiumPerShare, strikeDate);
     }
 
-
     public double getValue() {
-        return (this.isExecutable()) ? shareLimit * (sharePrice - strikePricePerShare) : 0.0;
-    }
-
-    public double getPremium() {
-        return premiumPerShare * shareLimit;
+        return (this.isExecutable()) ? shareLimit * (sharePrice - strikePricePerShare) : 0;
     }
 
     public double getPurchaseValue() {
-        return (this.isExecutable()) ? shareLimit * (sharePrice - strikePricePerShare - premiumPerShare) : this.getPremium();
-    }
-
-    public double getGain() {
-        return this.getValue() - this.getPremium();
-    }
-
-    public double getGainPercentage() {
-        return (this.isExecutable()) ? Math.round(((this.getGain() / this.getPremium()) * 100) * 100.0) / 100.0 : -100.0;
+        return this.getPremium();
     }
 
     public String toString() {
@@ -36,9 +23,9 @@ public class Call extends Option {
         sb.append(String.format("  Premium of $%.2f/share ($%.2f total)\n", premiumPerShare, this.getPremium()));
         sb.append(String.format("  Share Price: $%.2f\n", sharePrice));
         if (this.isExecutable()) {
-            sb.append(String.format("  Short Call Value: %.3f shares @\n\t($%.2f - $%.2f - $%.2f = $%.2f)\n", shareLimit, sharePrice, strikePricePerShare, premiumPerShare, this.getPurchaseValue()));
+            sb.append(String.format("  Short Call Value: %.3f shares @\n\t($%.2f - $%.2f - $%.2f = $%.2f)\n", shareLimit, sharePrice, strikePricePerShare, premiumPerShare, this.getGain()));
         } else {
-            sb.append(String.format("  Long Call (not executed); total loss $%.2f\n", this.getPurchaseValue()));
+            sb.append(String.format("  Long Call (not executed); total loss $%.2f\n", Math.abs(this.getGain())));
         }
         sb.append(String.format("%70.3f%%    $%15.2f\n", this.getGainPercentage(),  this.getValue()));
         return sb.toString();

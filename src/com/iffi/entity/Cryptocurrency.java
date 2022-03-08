@@ -67,14 +67,6 @@ public class Cryptocurrency extends Asset {
         return numberOfCoins * purchaseExchangeRate;
     }
 
-    public double getGain() {
-        return this.getValue() - this.getPurchaseValue();
-    }
-
-    public double getGainPercentage() {
-        return Math.round(((this.getGain() / this.getPurchaseValue()) * 100) * 1000.0) / 1000.0;
-    }
-
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("%-10s %-16s (Crypto)\n", code, label));

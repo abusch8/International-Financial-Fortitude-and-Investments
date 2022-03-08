@@ -51,14 +51,6 @@ public class Property extends Asset {
         return purchasePrice;
     }
 
-    public double getGain() {
-        return this.getValue() - this.getPurchaseValue();
-    }
-
-    public double getGainPercentage() {
-        return Math.round(((this.getGain() / this.getPurchaseValue()) * 100) * 1000.0) / 1000.0;
-    }
-
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("%-10s %s (Property)\n", code, label));

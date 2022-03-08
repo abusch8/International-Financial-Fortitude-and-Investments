@@ -24,9 +24,13 @@ public abstract class Asset {
 
     public abstract double getPurchaseValue();
 
-    public abstract double getGain();
+    public double getGain() {
+        return this.getValue() - this.getPurchaseValue();
+    }
 
-    public abstract double getGainPercentage();
+    public double getGainPercentage() {
+        return Math.round(((this.getGain() / this.getPurchaseValue()) * 100) * 1000.0) / 1000.0;
+    }
 
     public abstract String toString();
 }
