@@ -67,6 +67,10 @@ public abstract class Option extends Stock {
         return premiumPerShare * shareLimit;
     }
 
+    public double getPurchaseValue() {
+        return this.premiumPerShare * this.shareLimit;
+    }
+
 //    public double getValue() {
 //        return (this.isExecutable()) ? shareLimit * (sharePrice - strikePricePerShare) : 0.0;
 //    }

@@ -9,11 +9,7 @@ public class Call extends Option {
     }
 
     public double getValue() {
-        return (this.isExecutable()) ? shareLimit * (sharePrice - strikePricePerShare) : 0;
-    }
-
-    public double getPurchaseValue() {
-        return this.getPremium();
+        return (this.isExecutable()) ? shareLimit * (sharePrice - strikePricePerShare) - this.getPremium() : -this.getPremium();
     }
 
     public String toString() {
@@ -23,11 +19,11 @@ public class Call extends Option {
         sb.append(String.format("  Premium of $%.2f/share ($%.2f total)\n", premiumPerShare, this.getPremium()));
         sb.append(String.format("  Share Price: $%.2f\n", sharePrice));
         if (this.isExecutable()) {
-            sb.append(String.format("  Short Call Value: %.3f shares @\n\t($%.2f - $%.2f - $%.2f = $%.2f)\n", shareLimit, sharePrice, strikePricePerShare, premiumPerShare, this.getGain()));
+            sb.append(String.format("  Short Call Value: %.3f shares @\n\t($%.2f - $%.2f - $%.2f = $%.2f)\n", shareLimit, sharePrice, strikePricePerShare, premiumPerShare, this.getValue()));
         } else {
-            sb.append(String.format("  Long Call (not executed); total loss $%.2f\n", Math.abs(this.getGain())));
+            sb.append(String.format("  Long Call (not executed); total loss $%.2f\n", this.getValue()));
         }
-        sb.append(String.format("%70.3f%%    $%15.2f\n", this.getGainPercentage(),  this.getValue()));
+            sb.append(String.format("%70.3f%%    $%15.2f\n", this.getGainPercentage(),  this.getValue()));
         return sb.toString();
     }
 }
