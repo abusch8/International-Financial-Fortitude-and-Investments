@@ -14,7 +14,12 @@ public class AccountReader {
         List<Asset> assets = FileParser.readAssetsCSV();
         List<Account> accounts = FileParser.readAccountCSV(persons, assets);
 
-        double totalFees = 0.0, totalGain = 0.0, totalValue = 0.0;
+        accounts.sort((a, b) -> {
+            int cmp = a.getOwner().getLastName().compareTo(b.getOwner().getLastName());
+            return (cmp == 0) ? a.getOwner().getFirstName().compareTo(b.getOwner().getFirstName()) : cmp;
+        });
+
+        double totalFees = 0, totalGain = 0, totalValue = 0;
         System.out.println("Account Summary Report By Owner");
         System.out.println("==============================================================================================================");
         System.out.println("Account    Owner                Manager                       Fees          Return         Ret%          Value");

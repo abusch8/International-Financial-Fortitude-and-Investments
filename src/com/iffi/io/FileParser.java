@@ -41,7 +41,7 @@ public class FileParser {
                 switch (tokens[1]) {
                     case "P" -> asset = new Property(tokens[0], tokens[2], Double.parseDouble(tokens[3]));
                     case "S" -> asset = new Stock(tokens[0], tokens[2], tokens[3], Double.parseDouble(tokens[4]));
-                    case "C" -> asset = new Cryptocurrency(tokens[0], tokens[2], Double.parseDouble(tokens[3]), Double.parseDouble(tokens[4]));
+                    case "C" -> asset = new Cryptocurrency(tokens[0], tokens[2], Double.parseDouble(tokens[3]), Double.parseDouble(tokens[4]) / 100);
                 }
                 assets.add(asset);
             }

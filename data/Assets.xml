@@ -4,26 +4,31 @@
     <code>PA001</code>
     <label>Boardwalk</label>
     <appraisedValue>400000.0</appraisedValue>
+    <purchasePrice>0.0</purchasePrice>
   </property>
   <property>
     <code>PA002</code>
     <label>57 Chevy</label>
     <appraisedValue>47000.0</appraisedValue>
+    <purchasePrice>0.0</purchasePrice>
   </property>
   <property>
     <code>PA003</code>
     <label>Honus Wagner Card</label>
     <appraisedValue>1200000.0</appraisedValue>
+    <purchasePrice>0.0</purchasePrice>
   </property>
   <property>
     <code>PA004</code>
     <label>1993 Ford Festiva</label>
     <appraisedValue>3.5</appraisedValue>
+    <purchasePrice>0.0</purchasePrice>
   </property>
   <property>
     <code>PA005</code>
     <label>2020 Honda Fit</label>
     <appraisedValue>14500.0</appraisedValue>
+    <purchasePrice>0.0</purchasePrice>
   </property>
   <stock>
     <code>GOOG001</code>
@@ -60,29 +65,45 @@
     <label>Bitcoin</label>
     <exchangeRate>65694.5</exchangeRate>
     <exchangeFeeRate>1.25</exchangeFeeRate>
+    <purchaseExchangeRate>0.0</purchaseExchangeRate>
+    <numberOfCoins>0.0</numberOfCoins>
   </crypto>
   <crypto>
     <code>BARK</code>
     <label>Dogecoin</label>
     <exchangeRate>0.2788</exchangeRate>
     <exchangeFeeRate>2.75</exchangeFeeRate>
+    <purchaseExchangeRate>0.0</purchaseExchangeRate>
+    <numberOfCoins>0.0</numberOfCoins>
   </crypto>
   <crypto>
     <code>EIF101</code>
     <label>Ethereum</label>
     <exchangeRate>4745.83</exchangeRate>
     <exchangeFeeRate>1.75</exchangeFeeRate>
+    <purchaseExchangeRate>0.0</purchaseExchangeRate>
+    <numberOfCoins>0.0</numberOfCoins>
   </crypto>
   <crypto>
     <code>SC1000</code>
     <label>StupidCoin 1k</label>
     <exchangeRate>1.01</exchangeRate>
     <exchangeFeeRate>8.5</exchangeFeeRate>
+    <purchaseExchangeRate>0.0</purchaseExchangeRate>
+    <numberOfCoins>0.0</numberOfCoins>
   </crypto>
   <crypto>
     <code>SPICY</code>
     <label>Flow</label>
     <exchangeRate>13.85</exchangeRate>
     <exchangeFeeRate>5.5</exchangeFeeRate>
+    <purchaseExchangeRate>0.0</purchaseExchangeRate>
+    <numberOfCoins>0.0</numberOfCoins>
   </crypto>
+  <stock>
+    <code>FOO</code>
+    <label>FooBarBazInc</label>
+    <symbol>FOO</symbol>
+    <sharePrice>125.0</sharePrice>
+  </stock>
 </assets>

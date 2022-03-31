@@ -20,16 +20,16 @@ public abstract class Asset {
 
     public abstract double getValue();
 
-    public abstract double getFee();
-
     public abstract double getPurchaseValue();
+
+    public abstract double getFee();
 
     public double getGain() {
         return this.getValue() - this.getPurchaseValue();
     }
 
     public double getGainPercentage() {
-        return Math.round(((this.getGain() / this.getPurchaseValue()) * 100) * 1000.0) / 1000.0;
+        return (this.getGain() / this.getPurchaseValue()) * 100;
     }
 
     public abstract String toString();

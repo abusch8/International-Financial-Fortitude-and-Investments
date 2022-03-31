@@ -7,8 +7,8 @@ public class Cryptocurrency extends Asset {
     private final double exchangeRate;
     private final double exchangeFeeRate;
     private LocalDate purchaseDate = null;
-    private Double purchaseExchangeRate = 0.0;
-    private Double numberOfCoins = 0.0;
+    private double purchaseExchangeRate = 0;
+    private double numberOfCoins = 0;
 
     public Cryptocurrency(String code, String label, double exchangeRate, double exchangeFeeRate) {
         super(code, label);
@@ -47,31 +47,31 @@ public class Cryptocurrency extends Asset {
         return purchaseDate;
     }
 
-    public Double getPurchaseExchangeRate() {
+    public double getPurchaseExchangeRate() {
         return purchaseExchangeRate;
     }
 
-    public Double getNumberOfCoins() {
+    public double getNumberOfCoins() {
         return numberOfCoins;
     }
 
     public double getValue() {
-        return Math.round(numberOfCoins * exchangeRate * (1 - exchangeFeeRate / 100) * 100.0) / 100.0;
-    }
-
-    public double getFee() {
-        return 10;
+        return numberOfCoins * exchangeRate - (1 - exchangeFeeRate);
     }
 
     public double getPurchaseValue() {
         return numberOfCoins * purchaseExchangeRate;
     }
 
+    public double getFee() {
+        return 10;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("%-10s %-16s (Crypto)\n", code, label));
         sb.append(String.format("  Cost Basis:  %.3f coins @ $%.2f on %s\n", numberOfCoins, purchaseExchangeRate, purchaseDate.toString()));
-        String line = String.format("  Value Basis: %.3f coins @ $%.2f less %.2f%%", numberOfCoins, exchangeRate, exchangeFeeRate);
+        String line = String.format("  Value Basis: %.3f coins @ $%.2f less %.2f%%", numberOfCoins, exchangeRate, exchangeFeeRate * 100);
         sb.append(line).append(" ".repeat(59 - line.length()));
         sb.append(String.format("%10.3f%%    $%15.2f\n", this.getGainPercentage(), this.getValue()));
         return sb.toString();

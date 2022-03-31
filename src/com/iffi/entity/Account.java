@@ -38,6 +38,8 @@ public abstract class Account {
         return assets;
     }
 
+    public abstract double getFeeDiscount();
+
     public double getTotalValue() {
         double total = 0;
         for (Asset asset : assets) {
@@ -46,7 +48,7 @@ public abstract class Account {
         return total;
     }
 
-    public double getCostBasis() {
+    public double getTotalPurchaseValue() {
         double total = 0;
         for (Asset asset : assets) {
             total += asset.getPurchaseValue();
@@ -59,41 +61,49 @@ public abstract class Account {
         for (Asset asset : assets) {
             total += asset.getFee();
         }
-        if (this instanceof Pro) {
+        total *= (1 - this.getFeeDiscount());
+        if (this.getTotalValue() > 500000) {
             total *= 0.75;
         }
         return total;
     }
 
     public double getTotalGain() {
-        double total = 0;
-        for (Asset asset : assets) {
-            total += asset.getGain();
-        }
-        return total;
+        return this.getTotalValue() - this.getTotalPurchaseValue();
     }
 
     public double getTotalGainPercentage() {
-        double total = 0;
-        for (Asset asset : assets) {
-            total += asset.getGainPercentage();
-        }
-        return total;
+        return (this.getTotalGain() / this.getTotalPurchaseValue()) * 100;
     }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("=======================================\n||%6s Account %-20s||\n=======================================\n", this.getClass().getSimpleName(), number));
-        sb.append(String.format("+---------+\n|  Owner  |\n+---------+\n%s\n", owner.toString()));
-        sb.append(String.format("+-----------+\n|  Manager  |\n+-----------+\n%s\n", manager.toString()));
-        sb.append(String.format("+---------------+\n|  Beneficiary  |\n+---------------+\n%s\n", beneficiary.toString()));
-        sb.append("+----------------+\n|  Assets        |\n+----------------+\n");
+        sb.append("=======================================\n");
+        sb.append(String.format("||%6s Account %-20s||\n", this.getClass().getSimpleName(), number));
+        sb.append("=======================================\n");
+        sb.append("+---------+\n");
+        sb.append("|  Owner  |\n");
+        sb.append("+---------+\n");
+        sb.append(String.format("%s\n", owner.toString()));
+        sb.append("+-----------+\n");
+        sb.append("|  Manager  |\n");
+        sb.append("+-----------+\n");
+        sb.append(String.format("%s\n", manager.toString()));
+        sb.append("+---------------+\n");
+        sb.append("|  Beneficiary  |\n");
+        sb.append("+---------------+\n");
+        sb.append(String.format("%s\n", beneficiary.toString()));
+        sb.append("+----------------+\n");
+        sb.append("|  Assets        |\n");
+        sb.append("+----------------+\n");
         for (Asset asset : assets) {
             sb.append(asset.toString());
         }
-        sb.append("+----------------+\n|  Totals        |\n+----------------+\n");
+        sb.append("+----------------+\n");
+        sb.append("|  Totals        |\n");
+        sb.append("+----------------+\n");
         sb.append(String.format("Total Value:         $%12.2f\n", this.getTotalValue()));
-        sb.append(String.format("Cost Basis:          $%12.2f\n", this.getCostBasis()));
+        sb.append(String.format("Cost Basis:          $%12.2f\n", this.getTotalPurchaseValue()));
         sb.append(String.format("Total Account Fees:  $%12.2f\n", this.getTotalFees()));
         sb.append(String.format("Total Return:        $%12.2f\n", this.getTotalGain()));
         sb.append(String.format("Total Return %%:      $%12.2f\n", this.getTotalGainPercentage()));

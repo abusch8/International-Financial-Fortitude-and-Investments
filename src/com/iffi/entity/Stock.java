@@ -7,9 +7,9 @@ public class Stock extends Asset {
     protected final String symbol;
     protected final double sharePrice;
     private LocalDate purchaseDate = null;
-    private Double purchaseSharePrice = 0.0;
-    private Double numberOfShares = 0.0;
-    private Double dividendTotal = 0.0;
+    private double purchaseSharePrice = 0;
+    private double numberOfShares = 0;
+    private double dividendTotal = 0;
 
     public Stock(String code, String label, String symbol, double sharePrice) {
         super(code, label);
@@ -53,15 +53,15 @@ public class Stock extends Asset {
         return purchaseDate;
     }
 
-    public Double getPurchaseSharePrice() {
+    public double getPurchaseSharePrice() {
         return purchaseSharePrice;
     }
 
-    public Double getNumberOfShares() {
+    public double getNumberOfShares() {
         return numberOfShares;
     }
 
-    public Double getDividendTotal() {
+    public double getDividendTotal() {
         return dividendTotal;
     }
 
@@ -69,12 +69,12 @@ public class Stock extends Asset {
         return sharePrice * numberOfShares + dividendTotal;
     }
 
-    public double getFee() {
-        return 0;
-    }
-
     public double getPurchaseValue() {
         return purchaseSharePrice * numberOfShares;
+    }
+
+    public double getFee() {
+        return 0;
     }
 
     public String toString() {

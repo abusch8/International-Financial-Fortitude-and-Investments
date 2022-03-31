@@ -23,7 +23,7 @@ public class Call extends Option {
         } else {
             sb.append(String.format("  Long Call (not executed); total loss $%.2f\n", this.getValue()));
         }
-            sb.append(String.format("%70.3f%%    $%15.2f\n", this.getGainPercentage(),  this.getValue()));
+        sb.append(String.format("%70.3f%%    $%15.2f\n", this.getGainPercentage(),  this.getValue()));
         return sb.toString();
     }
 }

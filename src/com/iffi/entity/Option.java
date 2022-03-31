@@ -4,11 +4,11 @@ import java.time.LocalDate;
 
 public abstract class Option extends Stock {
 
-    protected LocalDate purchaseDate = null;
-    protected double strikePricePerShare = 0.0;
-    protected double shareLimit = 0.0;
-    protected double premiumPerShare = 0.0;
-    protected LocalDate strikeDate = null;
+    protected LocalDate purchaseDate;
+    protected double strikePricePerShare;
+    protected double shareLimit;
+    protected double premiumPerShare;
+    protected LocalDate strikeDate;
 
     protected Option(Stock stock, LocalDate purchaseDate, double strikePricePerShare, double shareLimit, double premiumPerShare, LocalDate strikeDate) {
         super(stock.getCode(), stock.getLabel(), stock.getSymbol(), stock.getSharePrice());
@@ -71,19 +71,7 @@ public abstract class Option extends Stock {
         return this.premiumPerShare * this.shareLimit;
     }
 
-//    public double getValue() {
-//        return (this.isExecutable()) ? shareLimit * (sharePrice - strikePricePerShare) : 0.0;
-//    }
-//
-//    public double getPurchaseValue() {
-//        return (this.isExecutable()) ? shareLimit * (sharePrice - strikePricePerShare - premiumPerShare) : this.getPremium();
-//    }
-//
-//    public double getGain() {
-//        return this.getValue() - this.getPurchaseValue();
-//    }
-//
-//    public double getGainPercentage() {
-//        return Math.round(((this.getGain() / this.getPurchaseValue()) * 100) * 1000.0) / 1000.0;
-//    }
+    public double getFee() {
+        return 0;
+    }
 }

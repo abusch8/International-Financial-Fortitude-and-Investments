@@ -6,7 +6,7 @@ public class Property extends Asset {
 
     private final double appraisedValue;
     private LocalDate purchaseDate = null;
-    private Double purchasePrice = 0.0;
+    private double purchasePrice = 0;
 
     public Property(String code, String label, double appraisedValue) {
         super(code, label);
@@ -35,7 +35,7 @@ public class Property extends Asset {
         return purchaseDate;
     }
 
-    public Double getPurchasePrice() {
+    public double getPurchasePrice() {
         return purchasePrice;
     }
 
@@ -43,12 +43,12 @@ public class Property extends Asset {
         return appraisedValue;
     }
 
-    public double getFee() {
-        return 100;
-    }
-
     public double getPurchaseValue() {
         return purchasePrice;
+    }
+
+    public double getFee() {
+        return 100;
     }
 
     public String toString() {
