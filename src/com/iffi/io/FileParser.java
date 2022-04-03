@@ -52,7 +52,7 @@ public class FileParser {
         return assets;
     }
 
-    public static List<Account> readAccountCSV(List<Person> persons, List<Asset> assets) {
+    public static List<Account> readAccountsCSV(List<Person> persons, List<Asset> assets) {
         List<Account> accounts = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader("data/Accounts.csv"));

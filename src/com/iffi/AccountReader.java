@@ -12,7 +12,7 @@ public class AccountReader {
     public static void main(String[] args) {
         List<Person> persons = FileParser.readPersonsCSV();
         List<Asset> assets = FileParser.readAssetsCSV();
-        List<Account> accounts = FileParser.readAccountCSV(persons, assets);
+        List<Account> accounts = FileParser.readAccountsCSV(persons, assets);
 
         accounts.sort((a, b) -> {
             int cmp = a.getOwner().getLastName().compareTo(b.getOwner().getLastName());
