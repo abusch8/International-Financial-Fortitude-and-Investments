@@ -2,127 +2,88 @@ package com.iffi.sql;
 
 import com.iffi.entity.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataLoader {
 
-    public static Address retrieveAddress(int addressId) {
-        Address address = null;
+    public static List<Person> readPersonDB() {
+        List<Person> persons = new ArrayList<>();
         Connection conn = Database.connect();
 
-        String query = "select street, city, state, zip, country from Address where id = ?;";
-
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, addressId);
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                String street = rs.getString("street");
-                String city = rs.getString("city");
-                String state = rs.getString("state");
-                String zip = String.valueOf(rs.getInt("zip"));
-                String country = rs.getString("country");
-
-                address = new Address(street, city, state, zip, country);
-            }
-        } catch (SQLException e) {
-             throw new RuntimeException(e);
-        } finally {
-            Database.disconnect(rs, ps, conn);
-        }
-        return address;
-    }
-
-    public static String retrieveEmail(int emailId) {
-        String email = null;
-        Connection conn = Database.connect();
-
-        String query = "select email from Email where id = ?;";
-
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, emailId);
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                email = rs.getString("email");
-            }
-        } catch (SQLException e) {
-             throw new RuntimeException(e);
-        } finally {
-            Database.disconnect(rs, ps, conn);
-        }
-        return email;
-    }
-
-    public static Person retrievePerson(int personId) {
-        Person person = null;
-        Connection conn = Database.connect();
-
-        String query1 = "select code, lastName, firstName, addressId from Person where id = ?;";
-        String query2 = "select id from Email where personId = ?;";
+        String query1 = "select Person.id as id, code, lastName, firstName, street, city, state, zip, country from Person " +
+                "join Address on Person.addressId = Address.id " +
+                "join State on State.id = Address.stateId " +
+                "join Country on Country.id = Address.countryId;";
+        String query2 = "select email from Email where personId = ?;";
 
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             ps = conn.prepareStatement(query1);
-            ps.setInt(1, personId);
             rs = ps.executeQuery();
-
-            if (rs.next()) {
-                String personCode = rs.getString("code");
+            while (rs.next()) {
+                int personId = rs.getInt("id");
+                String code = rs.getString("code");
                 String lastName = rs.getString("lastName");
                 String firstName = rs.getString("firstName");
-                Address address = retrieveAddress(rs.getInt("addressId"));
-
+                String street = rs.getString("street");
+                String city = rs.getString("city");
+                String state = rs.getString("state");
+                String zip = rs.getString("zip");
+                String country = rs.getString("country");
+                Address address = new Address(street, city, state, zip, country);
+                List<String> emails = new ArrayList<>();
                 ps = conn.prepareStatement(query2);
                 ps.setInt(1, personId);
+                ResultSet prev = rs;
                 rs = ps.executeQuery();
-
-                List<String> emails = new ArrayList<>();
                 while (rs.next()) {
-                    emails.add(retrieveEmail(rs.getInt("id")));
+                    emails.add(rs.getString("email"));
                 }
-                person = new Person(personCode, lastName, firstName, address, emails);
+                rs = prev;
+                persons.add(new Person(code, lastName, firstName, address, emails));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
         } finally {
             Database.disconnect(rs, ps, conn);
         }
-        return person;
+        return persons;
     }
 
-    public static Asset retrieveAsset(int assetId) {
-        Asset asset = null;
+    public static List<Asset> readAssetDB() {
+        List<Asset> assets = new ArrayList<>();
         Connection conn = Database.connect();
 
-        String query = "select type, code, label, appraisedValue, exchangeRate, exchangeFeeRate, symbol, sharePrice from Asset where id = ?;";
+        String query = "select type, code, label, appraisedValue, exchangeRate, exchangeFeeRate, symbol, sharePrice from Asset";
 
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             ps = conn.prepareStatement(query);
-            ps.setInt(1, assetId);
             rs = ps.executeQuery();
-
-            if (rs.next()) {
+            while (rs.next()) {
+                String type = rs.getString("type");
                 String code = rs.getString("code");
                 String label = rs.getString("label");
-                switch (rs.getString("type")) {
-                    case "P" -> asset = new Property(code, label, rs.getDouble("appraisedValue"));
-                    case "C" -> asset = new Cryptocurrency(code, label, rs.getDouble("exchangeRate"), rs.getDouble("exchangeFeeRate"));
-                    case "S" -> asset = new Stock(code, label, rs.getString("symbol"), rs.getDouble("sharePrice"));
+                switch (type) {
+                    case "P" -> {
+                        double appraisedValue = rs.getDouble("appraisedValue");
+                        assets.add(new Property(code, label, appraisedValue));
+                    }
+                    case "C" -> {
+                        double exchangeRate = rs.getDouble("exchangeRate");
+                        double exchangeFeeRate = rs.getDouble("exchangeFeeRate");
+                        assets.add(new Cryptocurrency(code, label, exchangeRate, exchangeFeeRate));
+                    }
+                    case "S" -> {
+                        String symbol = rs.getString("symbol");
+                        double sharePrice = rs.getDouble("sharePrice");
+                        assets.add(new Stock(code, label, symbol, sharePrice));
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -130,81 +91,101 @@ public class DataLoader {
         } finally {
             Database.disconnect(rs, ps, conn);
         }
-        return asset;
+        return assets;
     }
 
-//    public static Asset retrieveOwnedAsset(int assetId) {
-//        Asset asset = null;
-//        Connection conn = Database.connect();
-//
-//        String query = "select assetId, purchaseDate, purchasPrice, purchasExchangeRate, numberOfCoins, purchaseSharePrice, numberOfShares, dividendTotal, optionType, strikePricePerShare, shareLimit, premiumPerShare, strikeDate from OwnedAsset where assetId = ?;";
-//
-//        PreparedStatement ps = null;
-//        ResultSet rs = null;
-//        try {
-//            ps = conn.prepareStatement(query);
-//            ps.setInt(1, assetId);
-//            rs = ps.executeQuery();
-//
-//            if (rs.next()) {
-//                asset = retrieveAsset(rs.getInt(assetId));
-//                switch (asset.getClass().getSimpleName()) {
-//                    case "Property" -> asset = new Property((Property) asset, )
-//                    case "Cryptocurrency" -> asset = new Cryptocurrency((Cryptocurrency) asset, )
-//                    case "Stock" -> {
-//
-//                    }
-//                }
-//            }
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } finally {
-//            Database.disconnect(rs, ps, conn);
-//        }
-//        return existingAsset;
-//    }
+    public static List<Account> readAccountDB(List<Person> persons, List<Asset> assets) {
+        List<Account> accounts = new ArrayList<>();
+        Connection conn = Database.connect();
 
-//    public static Account retrieveAccount(int accountId) {
-//        Account account = null;
-//        Connection conn = Database.connect();
-//
-//        String query1 = "select type, number, ownerId, managerId, beneficiaryId from Account where id = ?;";
-//        String query2 = "select id from OwnedAsset where accountId = ?;";
-//
-//        PreparedStatement ps = null;
-//        ResultSet rs = null;
-//        try {
-//            ps = conn.prepareStatement(query1);
-//            ps.setInt(1, accountId);
-//            rs = ps.executeQuery();
-//
-//            if (rs.next()) {
-//                String type = rs.getString("type");
-//                String number = rs.getString("number");
-//                Person owner = retrievePerson(rs.getInt("ownerId"));
-//                Person manager = retrievePerson(rs.getInt("managerId"));
-//                Person beneficiary = retrievePerson(rs.getInt("beneficiaryId"));
-//
-//                ps = conn.prepareStatement(query2);
-//                ps.setInt(1, accountId);
-//                rs = ps.executeQuery();
-//
-//                List<Asset> ownedAssets = new ArrayList<>();
-//                while (rs.next()) {
-////                    asset.add((rs.getInt("")))
-//                }
-//
-//                switch (type) {
-//                    case "P" -> account = new Pro(number, owner, manager, beneficiary);
-//                    case "N" -> account = new Noob(number, owner, manager, beneficiary);
-//                }
-//            }
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        } finally {
-//            Database.disconnect(rs, ps, conn);
-//        }
-//        return account;
-//    }
+        String query1 = "select Account.id as id, type, number, owner.code as ownerCode, manager.code as managerCode, beneficiary.code as beneficiaryCode from Account " +
+                "join Person owner on Account.ownerId = owner.id " +
+                "join Person manager on Account.managerId = manager.id " +
+                "join Person beneficiary on Account.beneficiaryId = beneficiary.id;";
+        String query2 = "select code, purchaseDate, purchasePrice, purchaseExchangeRate, numberOfCoins, purchaseSharePrice, " +
+                "numberOfShares, dividendTotal, optionType, strikePricePerShare, shareLimit, premiumPerShare, strikeDate " +
+                "from OwnedAsset join Asset on OwnedAsset.assetId = Asset.id where accountId = ?;";
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = conn.prepareStatement(query1);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int accountId = rs.getInt("id");
+                String type = rs.getString("type");
+                String number = rs.getString("number");
+                String ownerCode = rs.getString("ownerCode");
+                String managerCode = rs.getString("managerCode");
+                String beneficiaryCode = rs.getString("beneficiaryCode");
+                Person owner = null, manager = null, beneficiary = null;
+                for (Person existingPerson : persons) {
+                    if (existingPerson.getCode().equals(ownerCode)) owner = existingPerson;
+                    if (existingPerson.getCode().equals(managerCode)) manager = existingPerson;
+                    if (existingPerson.getCode().equals(beneficiaryCode)) beneficiary = existingPerson;
+                }
+                List<Asset> associatedAssets = new ArrayList<>();
+                ps = conn.prepareStatement(query2);
+                ps.setInt(1, accountId);
+                ResultSet prev = rs;
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    String code = rs.getString("code");
+                    LocalDate purchaseDate = rs.getDate("purchaseDate").toLocalDate();
+                    for (Asset existingAsset : assets) {
+                        if (existingAsset.getCode().equals(code)) {
+                            switch (existingAsset.getClass().getSimpleName()) {
+                                case "Property" -> {
+                                    double purchasePrice = rs.getDouble("purchasePrice");
+                                    associatedAssets.add(new Property((Property) existingAsset, purchaseDate, purchasePrice));
+                                }
+                                case "Cryptocurrency" -> {
+                                    double purchaseExchangeRate = rs.getDouble("purchaseExchangeRate");
+                                    double numberOfCoins = rs.getDouble("numberOfCoins");
+                                    associatedAssets.add(new Cryptocurrency((Cryptocurrency) existingAsset, purchaseDate, purchaseExchangeRate, numberOfCoins));
+                                }
+                                case "Stock" -> {
+                                    double purchaseSharePrice = rs.getDouble("purchaseSharePrice");
+                                    double numberOfShares = rs.getDouble("numberOfShares");
+                                    String optionType = rs.getString("optionType");
+                                    switch (optionType) {
+                                        case "S" -> {
+                                            double dividendTotal = rs.getDouble("dividendTotal");
+                                            associatedAssets.add(new Stock((Stock) existingAsset, purchaseDate, purchaseSharePrice, numberOfShares, dividendTotal));
+                                        }
+                                        case "P" -> {
+                                            double strikePricePerShare = rs.getDouble("strikePricePerShare");
+                                            double shareLimit = rs.getDouble("shareLimit");
+                                            double premiumPerShare = rs.getDouble("premiumPerShare");
+                                            LocalDate strikeDate = rs.getDate("strikeDate").toLocalDate();
+                                            associatedAssets.add(new Put((Stock) existingAsset, purchaseDate, strikePricePerShare, shareLimit, premiumPerShare, strikeDate));
+                                        }
+                                        case "C" -> {
+                                            double strikePricePerShare = rs.getDouble("strikePricePerShare");
+                                            double shareLimit = rs.getDouble("shareLimit");
+                                            double premiumPerShare = rs.getDouble("premiumPerShare");
+                                            LocalDate strikeDate = rs.getDate("strikeDate").toLocalDate();
+                                            associatedAssets.add(new Call((Stock) existingAsset, purchaseDate, strikePricePerShare, shareLimit, premiumPerShare, strikeDate));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                rs = prev;
+                Account account = null;
+                switch (type) {
+                    case "P" -> account = new Pro(number, owner, manager, beneficiary, associatedAssets);
+                    case "N" -> account = new Noob(number, owner, manager, beneficiary, associatedAssets);
+                }
+                accounts.add(account);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            Database.disconnect(rs, ps, conn);
+        }
+        return accounts;
+    }
 }

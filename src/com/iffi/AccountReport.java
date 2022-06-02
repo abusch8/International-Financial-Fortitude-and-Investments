@@ -3,16 +3,20 @@ package com.iffi;
 import com.iffi.entity.Account;
 import com.iffi.entity.Asset;
 import com.iffi.entity.Person;
-import com.iffi.io.FileParser;
+import com.iffi.sql.DataLoader;
 
 import java.util.List;
 
-public class AccountReader {
+public class AccountReport {
 
     public static void main(String[] args) {
-        List<Person> persons = FileParser.readPersonsCSV();
-        List<Asset> assets = FileParser.readAssetsCSV();
-        List<Account> accounts = FileParser.readAccountsCSV(persons, assets);
+//        List<Person> persons = FileParser.readPersonsCSV();
+//        List<Asset> assets = FileParser.readAssetsCSV();
+//        List<Account> accounts = FileParser.readAccountsCSV(persons, assets);
+
+        List<Person> persons = DataLoader.readPersonDB();
+        List<Asset> assets = DataLoader.readAssetDB();
+        List<Account> accounts = DataLoader.readAccountDB(persons, assets);
 
         accounts.sort((a, b) -> {
             int cmp = a.getOwner().getLastName().compareTo(b.getOwner().getLastName());

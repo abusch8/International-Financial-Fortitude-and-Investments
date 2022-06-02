@@ -62,9 +62,9 @@ public class FileParser {
                 Person owner = null, manager = null, beneficiary = null;
                 String[] tokens = reader.readLine().split(",");
                 for (Person existingPerson : persons) {
-                    if (existingPerson.getPersonCode().equals(tokens[2])) owner = existingPerson;
-                    if (existingPerson.getPersonCode().equals(tokens[3])) manager = existingPerson;
-                    if (existingPerson.getPersonCode().equals(tokens[4])) beneficiary = existingPerson;
+                    if (existingPerson.getCode().equals(tokens[2])) owner = existingPerson;
+                    if (existingPerson.getCode().equals(tokens[3])) manager = existingPerson;
+                    if (existingPerson.getCode().equals(tokens[4])) beneficiary = existingPerson;
                 }
                 List<Asset> associatedAssets = new ArrayList<>();
                 int j = 5;
