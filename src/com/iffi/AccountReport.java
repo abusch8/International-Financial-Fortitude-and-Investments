@@ -10,9 +10,9 @@ import java.util.List;
 public class AccountReport {
 
     public static void main(String[] args) {
-//        List<Person> persons = FileParser.readPersonsCSV();
-//        List<Asset> assets = FileParser.readAssetsCSV();
-//        List<Account> accounts = FileParser.readAccountsCSV(persons, assets);
+// List<Person> persons = FileParser.readPersonsCSV();
+// List<Asset> assets = FileParser.readAssetsCSV();
+// List<Account> accounts = FileParser.readAccountsCSV(persons, assets);
 
         List<Person> persons = DataLoader.readPersonDB();
         List<Asset> assets = DataLoader.readAssetDB();

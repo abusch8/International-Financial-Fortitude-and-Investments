@@ -1,13 +1,28 @@
 package com.iffi.sql;
 
 import com.iffi.entity.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.core.config.DefaultConfiguration;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataLoader {
+
+    private static final Logger LOGGER = LogManager.getLogger(DataLoader.class);
+
+    static {
+        Configurator.initialize(new DefaultConfiguration());
+        Configurator.setRootLevel(Level.INFO);
+    }
 
     public static List<Person> readPersonDB() {
         List<Person> persons = new ArrayList<>();
@@ -23,6 +38,7 @@ public class DataLoader {
         ResultSet rs = null;
         try {
             ps = conn.prepareStatement(query1);
+            LOGGER.info(ps);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int personId = rs.getInt("id");
@@ -38,6 +54,7 @@ public class DataLoader {
                 List<String> emails = new ArrayList<>();
                 ps = conn.prepareStatement(query2);
                 ps.setInt(1, personId);
+                LOGGER.info(ps);
                 ResultSet prev = rs;
                 rs = ps.executeQuery();
                 while (rs.next()) {
@@ -47,6 +64,7 @@ public class DataLoader {
                 persons.add(new Person(code, lastName, firstName, address, emails));
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new RuntimeException();
         } finally {
             Database.disconnect(rs, ps, conn);
@@ -64,6 +82,7 @@ public class DataLoader {
         ResultSet rs = null;
         try {
             ps = conn.prepareStatement(query);
+            LOGGER.info(ps);
             rs = ps.executeQuery();
             while (rs.next()) {
                 String type = rs.getString("type");
@@ -87,6 +106,7 @@ public class DataLoader {
                 }
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new RuntimeException(e);
         } finally {
             Database.disconnect(rs, ps, conn);
@@ -98,7 +118,7 @@ public class DataLoader {
         List<Account> accounts = new ArrayList<>();
         Connection conn = Database.connect();
 
-        String query1 = "select Account.id as id, type, number, owner.code as ownerCode, manager.code as managerCode, beneficiary.code as beneficiaryCode from Account " +
+        String query1 = "select Account.id as id, type, number, owner.code, manager.code, beneficiary.code from Account " +
                 "join Person owner on Account.ownerId = owner.id " +
                 "join Person manager on Account.managerId = manager.id " +
                 "join Person beneficiary on Account.beneficiaryId = beneficiary.id;";
@@ -110,14 +130,15 @@ public class DataLoader {
         ResultSet rs = null;
         try {
             ps = conn.prepareStatement(query1);
+            LOGGER.info(ps);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int accountId = rs.getInt("id");
                 String type = rs.getString("type");
                 String number = rs.getString("number");
-                String ownerCode = rs.getString("ownerCode");
-                String managerCode = rs.getString("managerCode");
-                String beneficiaryCode = rs.getString("beneficiaryCode");
+                String ownerCode = rs.getString("owner.code");
+                String managerCode = rs.getString("manager.code");
+                String beneficiaryCode = rs.getString("beneficiary.code");
                 Person owner = null, manager = null, beneficiary = null;
                 for (Person existingPerson : persons) {
                     if (existingPerson.getCode().equals(ownerCode)) owner = existingPerson;
@@ -127,6 +148,7 @@ public class DataLoader {
                 List<Asset> associatedAssets = new ArrayList<>();
                 ps = conn.prepareStatement(query2);
                 ps.setInt(1, accountId);
+                LOGGER.info(ps);
                 ResultSet prev = rs;
                 rs = ps.executeQuery();
                 while (rs.next()) {
@@ -145,11 +167,11 @@ public class DataLoader {
                                     associatedAssets.add(new Cryptocurrency((Cryptocurrency) existingAsset, purchaseDate, purchaseExchangeRate, numberOfCoins));
                                 }
                                 case "Stock" -> {
-                                    double purchaseSharePrice = rs.getDouble("purchaseSharePrice");
-                                    double numberOfShares = rs.getDouble("numberOfShares");
                                     String optionType = rs.getString("optionType");
                                     switch (optionType) {
                                         case "S" -> {
+                                            double purchaseSharePrice = rs.getDouble("purchaseSharePrice");
+                                            double numberOfShares = rs.getDouble("numberOfShares");
                                             double dividendTotal = rs.getDouble("dividendTotal");
                                             associatedAssets.add(new Stock((Stock) existingAsset, purchaseDate, purchaseSharePrice, numberOfShares, dividendTotal));
                                         }
@@ -182,6 +204,7 @@ public class DataLoader {
                 accounts.add(account);
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new RuntimeException(e);
         } finally {
             Database.disconnect(rs, ps, conn);
